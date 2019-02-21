@@ -171,3 +171,22 @@ budgets = Budget.create(
     },
   ]
 )
+
+entries = Entry.create(
+  [
+    {
+      user_id: 1,
+      category_id: 3,
+      date: Date.new(2019,2,20),
+      amount: 30000,
+      description: "Ăn bún bò giò ốc tại KeangNam"
+    },
+    {
+      user_id: 2,
+      category_id: 8,
+      date: Date.new(2019,2,19),
+      amount: 2000000,
+      description: "Đóng bảo hiểm tháng 2 cho Hường và Cún"
+    },
+  ]
+)
