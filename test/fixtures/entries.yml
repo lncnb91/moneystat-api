@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_expense: false
+  category_id: 1
+  user_id: 1
+  date: 2019-02-21
+  amount: 1
+  description: MyString
+
+two:
+  is_expense: false
+  category_id: 1
+  user_id: 1
+  date: 2019-02-21
+  amount: 1
+  description: MyString
