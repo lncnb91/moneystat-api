@@ -10,42 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_073337) do
+ActiveRecord::Schema.define(version: 2019_02_21_073326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "budgets", force: :cascade do |t|
     t.date "month"
-    t.integer "category_id"
+    t.bigint "category_id"
     t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_budgets_on_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.boolean "is_expense"
+    t.bigint "wallet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["wallet_id"], name: "index_categories_on_wallet_id"
   end
 
   create_table "entries", force: :cascade do |t|
-    t.boolean "is_expense"
-    t.integer "category_id"
+    t.bigint "category_id"
     t.integer "user_id"
     t.date "date"
     t.integer "amount"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_entries_on_category_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
+    t.bigint "wallet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wallet_id"], name: "index_users_on_wallet_id"
+  end
+
+  create_table "wallets", force: :cascade do |t|
+    t.string "name"
+    t.integer "balance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "budgets", "categories"
+  add_foreign_key "categories", "wallets"
+  add_foreign_key "entries", "categories"
+  add_foreign_key "users", "wallets"
 end

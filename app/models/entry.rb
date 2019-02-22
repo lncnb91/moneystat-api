@@ -1,5 +1,5 @@
 class Entry < ApplicationRecord
-  belongs_to :categories
+  belongs_to :category
 
   scope :expense_by_month, ->(month) do
     joins("INNER JOIN categories ON entries.category_id = categories.id").
