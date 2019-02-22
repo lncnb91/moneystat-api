@@ -9,22 +9,8 @@ class Entry < ApplicationRecord
           month, month.end_of_month, wallet_id)
   end
 
-  scope :expense_by_wallet_month_user, ->(wallet_id, month, user_id) do
+  scope :expense_by_user_month, ->(user_id, month) do
+    wallet_id = User.find(user_id).wallet_id
     expense_by_wallet_month(wallet_id, month).where("entries.user_id = ?", user_id)
-  end
-
-  class << self
-    def total_expense_by_wallet_month wallet_id, month
-      expense_by_wallet_month(wallet_id, month).pluck(:amount).sum
-    end
-
-    def total_expense_by_wallet_month_user wallet_id, month, user_id
-      expense_by_wallet_month_user(wallet_id, month, user_id).pluck(:amount).sum
-    end
-
-    def total_expense_wallet_last_month
-      last_month = Date.today.beginning_of_month - 1.month
-      total_spent_by_wallet_month(wallet_id, last_month)
-    end
   end
 end
