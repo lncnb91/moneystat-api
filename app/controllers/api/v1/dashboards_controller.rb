@@ -9,14 +9,16 @@ module Api::V1
           spent_amount: user.total_expense_by_month(current_month)
         }
       end
-      small_box_data = {
-        budget: wallet.total_budget_by_month(current_month),
-        total_spent: wallet.total_expense_by_month(current_month),
-        balance: wallet.balance,
-        last_month_spent: wallet.total_expense_last_month,
+      dashboard_data = {
+        small_box: {
+          budget: wallet.total_budget_by_month(current_month),
+          total_spent: wallet.total_expense_by_month(current_month),
+          wallet_balance: wallet.balance,
+          last_month_spent: wallet.total_expense_last_month
+        },
         spending_by_user: spending_by_user
       }
-      render json: small_box_data
+      render json: dashboard_data
     end
   end
 end
