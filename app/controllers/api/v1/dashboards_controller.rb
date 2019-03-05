@@ -11,7 +11,7 @@ module Api::V1
         }
       end
 
-      detailed_budget = Budget.by_wallet_month(params[:wallet_id], current_month).map do |budget|
+      detailed_budgets = Budget.by_wallet_month(params[:wallet_id], current_month).map do |budget|
         expected_expense = budget.amount
         spent = budget.category.spent_on_month(current_month)
         {
@@ -40,7 +40,7 @@ module Api::V1
           last_month_spent: wallet.total_expense_last_month
         },
         spending_by_user: spending_by_user,
-        detailed_budget: detailed_budget,
+        detailed_budgets: detailed_budgets,
         spent_expenses: spent_expenses
       }
       render json: dashboard_data
