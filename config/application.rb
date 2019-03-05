@@ -34,7 +34,7 @@ module MoneystatApi
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:3000', 'https://lncnb91.github.io'
+        origins 'http://localhost:3000', 'https://lncnb91.github.io', 'http://192.168.16.24:3000'
         resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
       end
     end
