@@ -1,5 +1,6 @@
 class Entry < ApplicationRecord
   belongs_to :category
+  belongs_to :user
 
   delegate :wallet, to: :category, allow_nil: true
 
@@ -7,6 +8,12 @@ class Entry < ApplicationRecord
     joins(:category).where("entries.date >= ? and entries.date <= ? AND 
       categories.is_expense = TRUE AND categories.wallet_id = ?", 
           month, month.end_of_month, wallet_id)
+  end
+
+  scope :expend_by_wallet_month_category, ->(month, category_id) do #category belongs to wallet so no need wallet_id
+    joins(:category).where("entries.date >= ? and entries.date <= ? AND 
+      categories.is_expense = TRUE AND categories.id = ?", 
+          month, month.end_of_month, category_id)
   end
 
   scope :expense_by_user_month, ->(user_id, month) do
