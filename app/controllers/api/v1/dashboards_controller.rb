@@ -17,6 +17,7 @@ module Api::V1
         {
           id: budget.id,
           category: budget.category.name,
+          description: budget.category.description,
           expected_expense: expected_expense,
           spent: spent,
           available: expected_expense - spent
