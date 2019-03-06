@@ -15,6 +15,7 @@ module Api::V1
         expected_expense = budget.amount
         spent = budget.category.spent_on_month(current_month)
         {
+          id: budget.id,
           category: budget.category.name,
           expected_expense: expected_expense,
           spent: spent,
@@ -24,6 +25,7 @@ module Api::V1
 
       spent_expenses = Entry.expense_by_wallet_month(params[:wallet_id], current_month).map do |expense|
         {
+          id: expense.id,
           user: expense.user.name,
           date: expense.date.strftime("%Y/%m/%d"),
           category: expense.category.name,
