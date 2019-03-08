@@ -1,5 +1,8 @@
 module Api::V1
   class DashboardsController < ApplicationController
+    STATSTIC_MONTHS_EARLIEST = 6
+    STATSTIC_MONTHS_LATEST = 1
+
     def index
       current_month = Date.today.beginning_of_month
       wallet = Wallet.find(params[:wallet_id])
@@ -35,6 +38,15 @@ module Api::V1
         }
       end
 
+      monthly_spending = STATSTIC_MONTHS_EARLIEST.downto(STATSTIC_MONTHS_LATEST).map do |i|
+        month = current_month - i.months
+        month_by_int = month.month
+        {
+          month: I18n.t("date.abbr_month_names")[month_by_int],
+          total_expense: wallet.total_expense_by_month(month)
+        }
+      end
+
       dashboard_data = {
         small_box: {
           budget: wallet.total_budget_by_month(current_month),
@@ -44,7 +56,8 @@ module Api::V1
         },
         spending_by_user: spending_by_user,
         detailed_budgets: detailed_budgets,
-        spent_expenses: spent_expenses
+        spent_expenses: spent_expenses,
+        monthly_spending: monthly_spending
       }
       render json: dashboard_data
     end
